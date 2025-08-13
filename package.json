@@ -1,12 +1,12 @@
 {
-  "name": "check-in-portico-guide",
+  "name": "portico-d-ottavia-guide",
   "version": "1.0.0",
-  "type": "module",
+  "description": "Check-in guide for Portico d'Ottavia",
+  "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "^4.19.2",
-    "cors": "^2.8.5"
+    "express": "^4.18.2"
   }
 }

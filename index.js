@@ -1,145 +1,52 @@
-// Check-in — Via del Portico d’Ottavia (static guide)
-import express from 'express';
-import cors from 'cors';
-
+const express = require('express');
 const app = express();
-app.use(cors());
-app.use(express.json());
+const port = process.env.PORT || 3000;
 
-// Serve static (images are in repo root)
-app.use(express.static('.'));
+app.use(express.static(__dirname)); // Serve le immagini nella stessa cartella
 
-// Single page
-app.get('/', (_req, res) => {
-  const html = `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Check-in Guide — Via del Portico d’Ottavia</title>
-<link rel="icon" href="building-door.jpg">
-<style>
-  :root { --brand:#2b2118; --ink:#1f2937; --muted:#6b7280; --bg:#f7f7f7; --card:#ffffff; --line:#e5e7eb; }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
-  .wrap{max-width:860px;margin:0 auto;padding:16px}
-  header{position:sticky;top:0;background:var(--card);border-bottom:1px solid var(--line);padding:12px 14px;z-index:5}
-  h1{font-size:20px;margin:0}
-  .addr{font-size:14px;color:var(--muted)}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin:14px 0}
-  .step{display:flex;gap:12px;align-items:flex-start}
-  .num{flex:0 0 36px;height:36px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
-  h2{margin:6px 0 8px 0;font-size:18px}
-  p{margin:6px 0;line-height:1.45}
-  figure{margin:10px 0}
-  /* immagini “leggere” a vista: dimezzate */
-  img{width:50%;max-width:480px;height:auto;border-radius:10px;border:1px solid var(--line);display:block}
-  figcaption{font-size:12px;color:var(--muted);margin-top:6px}
-  .cta{display:inline-block;margin-left:8px;padding:8px 10px;border-radius:10px;background:var(--brand);color:#fff;text-decoration:none}
-  footer{color:var(--muted);text-align:center;font-size:12px;margin:18px 0}
-  @media (max-width:520px){ img{width:100%;} } /* su telefoni la foto torna full-width */
-</style>
-</head>
-<body>
-<header class="wrap">
-  <h1>Check-in Guide — Via del Portico d’Ottavia</h1>
-  <div class="addr">Address: Via del Portico d’Ottavia, Rome • Phone/WhatsApp: <b>+39 335 524 5756</b></div>
-</header>
+app.get('/', (req, res) => {
+  res.send(`
+    <html>
+      <head>
+        <title>Check-in Guide – Portico d’Ottavia</title>
+        <style>
+          body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; line-height: 1.6; }
+          h1 { text-align: center; }
+          h2 { color: #444; margin-top: 30px; }
+          img { display: block; margin: 10px auto; max-width: 50%; height: auto; border-radius: 8px; }
+        </style>
+      </head>
+      <body>
+        <h1>Check-in Guide – Portico d’Ottavia</h1>
 
-<main class="wrap">
+        <h2>1️⃣ Arriving at the Building</h2>
+        <p>When you reach Via del Portico d’Ottavia, look for the little wooden door under the lion sculpture.</p>
+        <img src="building-door.jpg" alt="Building Door">
 
-  <!-- 1) Arriving at the Building -->
-  <section class="card">
-    <div class="step">
-      <div class="num">1</div>
-      <div>
-        <h2>Arriving at the Building</h2>
-        <p>When you reach <b>Via del Portico d’Ottavia</b>, look for the <b>little wooden door</b> under the stone lion sculpture.</p>
-        <figure>
-          <img src="building-door.jpg" alt="Little wooden door at the building entrance">
-          <figcaption>Building entrance — the small wooden door.</figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
+        <h2>2️⃣ Using the Intercom</h2>
+        <p>Press the <strong>third button from the bottom</strong> on the intercom panel, located on the left-hand side of the building entrance.<br>
+        Then call me at <strong>+39 335 524 5756</strong> and wait for the click.</p>
+        <img src="intercom.jpg" alt="Intercom">
 
-  <!-- 2) Using the Intercom -->
-  <section class="card">
-    <div class="step">
-      <div class="num">2</div>
-      <div>
-        <h2>Using the Intercom</h2>
-        <p>Press the <b>third button from the bottom</b> on the intercom panel located on the <b>left-hand side</b> of the entrance,
-           <b>then call me</b> at <a class="cta" href="tel:+393355245756">+39&nbsp;335&nbsp;524&nbsp;5756</a>.</p>
-        <p>Wait for the door to unlock — you will hear a click.</p>
-        <figure>
-          <img src="intercom.jpg" alt="Intercom panel — press the third button from the bottom">
-          <figcaption>Intercom panel — highlighted button.</figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
+        <h2>3️⃣ Entering the Main Door</h2>
+        <p>Push the door firmly once it is unlocked.</p>
 
-  <!-- 3) Entering the Main Door -->
-  <section class="card">
-    <div class="step">
-      <div class="num">3</div>
-      <div>
-        <h2>Entering the Main Door</h2>
-        <p><b>Push the door once it is unlocked.</b></p>
-      </div>
-    </div>
-  </section>
+        <h2>4️⃣ Inside the Building</h2>
+        <p>Before the stairs, on the left-hand side, there is a button for the internal lights. The button is on a timer and will turn off after 5 minutes.</p>
+        <img src="hallway-light.jpg" alt="Hallway Light">
 
-  <!-- 4) Inside the Building -->
-  <section class="card">
-    <div class="step">
-      <div class="num">4</div>
-      <div>
-        <h2>Inside the Building</h2>
-        <p>Before the stairs on the left side, there is a <b>light button</b> for the internal lights. The button is on a timer and turns off after about <b>5 minutes</b>.</p>
-        <figure>
-          <img src="hallway-light.jpg" alt="Light button before the stairs on the left">
-          <figcaption>Light button before the stairs (left side).</figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
+        <h2>5️⃣ Reaching the Apartment</h2>
+        <p>The apartment is located on the <strong>third floor</strong>.</p>
 
-  <!-- 5) Reaching the Apartment -->
-  <section class="card">
-    <div class="step">
-      <div class="num">5</div>
-      <div>
-        <h2>Reaching the Apartment</h2>
-        <p>The apartment is on the <b>3rd floor</b>.</p>
-        <figure>
-          <img src="apartment-door.jpg" alt="Apartment door">
-          <figcaption>Apartment door — 3rd floor.</figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
+        <h2>6️⃣ Get Inside the Apartment</h2>
+        <p>Call me once you arrive in front of the apartment door and I will open it for you.</p>
+        <img src="apartment-door.jpg" alt="Apartment Door">
 
-  <!-- 6) Get inside the apartment -->
-  <section class="card">
-    <div class="step">
-      <div class="num">6</div>
-      <div>
-        <h2>Get Inside the Apartment</h2>
-        <p><b>Call me</b> once you arrive in front of the apartment door and <b>I will open it for you</b>. Phone/WhatsApp:
-           <a class="cta" href="tel:+393355245756">+39&nbsp;335&nbsp;524&nbsp;5756</a>.</p>
-      </div>
-    </div>
-  </section>
-
-  <footer>niceflatinrome.com • Quick visual check-in guide — Via del Portico d’Ottavia</footer>
-</main>
-</body>
-</html>`;
-  res.setHeader('content-type','text/html; charset=utf-8');
-  res.end(html);
+      </body>
+    </html>
+  `);
 });
 
-const port = process.env.PORT || 8787;
-app.listen(port, () => console.log('Check-in guide running on http://localhost:'+port));
+app.listen(port, () => {
+  console.log(`Check-in guide available at http://localhost:${port}`);
+}); 

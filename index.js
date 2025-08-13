@@ -1,17 +1,27 @@
-const express = require('express');
-const path = require('path');
+ // index.js — static server for your check-in guide
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname  = path.dirname(__filename);
 
 const app = express();
-const port = process.env.PORT || 3000;
+app.disable('x-powered-by');
+app.use(cors());
 
-// Serve tutti i file statici (HTML, CSS, immagini)
-app.use(express.static(__dirname));
+// Servi tutto da /public (HTML + immagini)
+app.use(express.static(path.join(__dirname, 'public'), {
+  maxAge: '7d',
+  etag: true,
+  lastModified: true
+}));
 
-// Pagina principale
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+// Homepage → checkin.html
+app.get('/', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'checkin.html'));
 });
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+const port = process.env.PORT || 8787;
+app.listen(port, () => console.log('Check-in guide up on http://localhost:' + port));

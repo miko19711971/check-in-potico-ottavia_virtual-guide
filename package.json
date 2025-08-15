@@ -1,7 +1,12 @@
 {
-  "name": "check-in-portico-ottavia-guide",
+  "name": "check-in_portico_ottavia_multilang",
   "version": "1.0.0",
   "type": "module",
-  "scripts": { "start": "node index.js" },
-  "dependencies": { "express": "^4.19.2", "cors": "^2.8.5" }
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cors": "2.8.5",
+    "express": "4.19.2"
+  }
 }
